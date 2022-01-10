@@ -518,4 +518,3 @@ BridgedInstruction SILBuilder_createIntegerLiteral(BridgedInstruction insertionP
   return {builder.createIntegerLiteral(getRegularLocation(loc),
                                        getSILType(type), value)};
 }
-

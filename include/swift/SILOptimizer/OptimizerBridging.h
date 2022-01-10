@@ -45,6 +45,14 @@ typedef struct {
   unsigned char incomplete;
 } BridgedCalleeList;
 
+typedef struct {
+  void * _Nullable rcia;
+} BridgedRCIdentityAnalysis;
+
+typedef struct {
+  void * _Nonnull functionInfo;
+} BridgedRCIdentityFunctionInfo;
+
 typedef void (* _Nonnull BridgedFunctionPassRunFn)(BridgedFunctionPassCtxt);
 typedef void (* _Nonnull BridgedInstructionPassRunFn)(BridgedInstructionPassCtxt);
 
@@ -66,9 +74,23 @@ BridgedCalleeAnalysis PassContext_getCalleeAnalysis(BridgedPassContext context);
 
 BridgedCalleeList CalleeAnalysis_getCallees(BridgedCalleeAnalysis calleeAnalysis,
                                             BridgedValue callee);
+
 SwiftInt BridgedFunctionArray_size(BridgedCalleeList callees);
 BridgedFunction BridgedFunctionArray_get(BridgedCalleeList callees,
                                          SwiftInt index);
+
+BridgedRCIdentityAnalysis
+PassContext_getRCIdentityAnalysis(BridgedPassContext context);
+
+BridgedRCIdentityFunctionInfo
+RCIdentityAnalysis_getFunctionInfo(BridgedRCIdentityAnalysis bridgedAnalysis,
+                                   BridgedFunction function);
+
+BridgedValue RCIdentityFunctionInfo_getRCIdentityRoot(
+    BridgedRCIdentityFunctionInfo bridgedInfo, BridgedValue value);
+
+OptionalBridgedFunction PassContext_getDestructor(BridgedPassContext context,
+                                                  BridgedType type);
 
 #ifdef __cplusplus
 } // extern "C"

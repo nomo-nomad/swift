@@ -95,6 +95,10 @@ typedef struct {
 } BridgedFunction;
 
 typedef struct {
+  OptionalSwiftObject obj;
+} OptionalBridgedFunction;
+
+typedef struct {
   SwiftObject obj;
 } BridgedGlobalVar;
 
@@ -144,6 +148,11 @@ typedef enum {
   MayHaveSideEffectsBehavior
 } BridgedMemoryBehavior;
 
+// AST bridging
+
+typedef struct {
+  const void * _Nonnull op;
+} BridgedSubstitutionMap;
 
 typedef intptr_t SwiftInt;
 
@@ -197,6 +206,7 @@ BridgedType SILValue_getType(BridgedValue value);
 
 SwiftInt SILType_isAddress(BridgedType);
 SwiftInt SILType_isTrivial(BridgedType, BridgedFunction);
+BridgedSubstitutionMap SILType_getContextSubstitutionMap(BridgedType);
 
 BridgedBasicBlock SILArgument_getParent(BridgedArgument argument);
 
@@ -240,9 +250,11 @@ BridgedInstruction SILBuilder_createBuiltinBinaryFunction(
           BridgedLocation loc, BridgedStringRef name,
           BridgedType operandType, BridgedType resultType, BridgedValueArray arguments);
 BridgedInstruction SILBuilder_createCondFail(BridgedInstruction insertionPoint,
-          BridgedLocation loc, BridgedValue condition, BridgedStringRef messge);
+          BridgedLocation loc, BridgedValue condition, BridgedStringRef message);
 BridgedInstruction SILBuilder_createIntegerLiteral(BridgedInstruction insertionPoint,
           BridgedLocation loc, BridgedType type, SwiftInt value);
+void SILBuilder_createDevirtualizedRelease(
+          BridgedFunction dealloc, BridgedInstruction release, BridgedValue object);
 
 SWIFT_END_NULLABILITY_ANNOTATIONS
 
