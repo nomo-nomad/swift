@@ -44,7 +44,7 @@ public struct StackList<Element> : Sequence, CustomReflectable {
     var index: Int
     let lastSlab: BridgedSlab
     let endIndex: Int
-    
+
     public mutating func next() -> Element? {
       let end = (slab.data == lastSlab.data ? endIndex : slabCapacity)
       if index < end {
@@ -60,7 +60,7 @@ public struct StackList<Element> : Sequence, CustomReflectable {
       return nil
     }
   }
-  
+
   public init(context: BridgedPassContext) { self.context = context }
 
   public func makeIterator() -> Iterator {
@@ -102,7 +102,7 @@ public struct StackList<Element> : Sequence, CustomReflectable {
   }
 
   public var isEmpty: Bool { return endIndex == 0 }
-  
+
   public mutating func pop() -> Element? {
     if isEmpty {
       return nil
@@ -110,7 +110,7 @@ public struct StackList<Element> : Sequence, CustomReflectable {
     assert(endIndex > 0)
     endIndex -= 1
     let elem = (StackList.bind(lastSlab) + endIndex).move()
-    
+
     if endIndex == 0 {
       if lastSlab.data == firstSlab.data {
         _ = PassContext_freeSlab(context, lastSlab)
@@ -125,11 +125,11 @@ public struct StackList<Element> : Sequence, CustomReflectable {
 
     return elem
   }
-  
+
   public mutating func removeAll() {
     while pop() != nil { }
   }
-  
+
   public var customMirror: Mirror {
     let c: [Mirror.Child] = map { (label: nil, value: $0) }
     return Mirror(self, children: c)
