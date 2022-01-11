@@ -59,3 +59,7 @@ final public class Function : CustomStringConvertible {
 extension BridgedFunction {
   public var function: Function { obj.getAs(Function.self) }
 }
+
+extension OptionalBridgedFunction {
+  public var function: Function? { obj.getAs(Function.self) }
+}

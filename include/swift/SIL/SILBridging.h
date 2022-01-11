@@ -253,8 +253,22 @@ BridgedInstruction SILBuilder_createCondFail(BridgedInstruction insertionPoint,
           BridgedLocation loc, BridgedValue condition, BridgedStringRef message);
 BridgedInstruction SILBuilder_createIntegerLiteral(BridgedInstruction insertionPoint,
           BridgedLocation loc, BridgedType type, SwiftInt value);
-void SILBuilder_createDevirtualizedRelease(
-          BridgedFunction dealloc, BridgedInstruction release, BridgedValue object);
+BridgedInstruction SILBuilder_createUncheckedRefCast(BridgedInstruction insertionPoint,
+                                                     BridgedLocation loc,
+                                                     BridgedValue op,
+                                                     BridgedType type);
+BridgedInstruction
+SILBuilder_createSetDeallocating(BridgedInstruction insertionPoint,
+                                 BridgedLocation loc, BridgedValue op,
+                                 bool isAtomic);
+BridgedInstruction
+SILBuilder_createFunctionRef(BridgedInstruction insertionPoint,
+                             BridgedLocation loc, BridgedFunction function);
+BridgedInstruction SILBuilder_createApply(BridgedInstruction insertionPoint,
+                                          BridgedLocation loc,
+                                          BridgedValue function,
+                                          BridgedSubstitutionMap subMap,
+                                          BridgedValueArray arguments);
 
 SWIFT_END_NULLABILITY_ANNOTATIONS
 

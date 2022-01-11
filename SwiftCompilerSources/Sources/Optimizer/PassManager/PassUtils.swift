@@ -10,6 +10,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+import AST
 import SIL
 import OptimizerBridging
 
@@ -83,6 +84,14 @@ struct PassContext {
     PassContext_notifyChanges(passContext, instructionsChanged)
 
     RefCountingInst_setIsAtomic(instruction.bridged, isAtomic)
+  }
+
+  func getDeallocRef(for type: Type) -> Function? {
+    PassContext_getDeallocRef(passContext, type.bridged).function
+  }
+
+  func getContextSubstitutionMap(for type: Type) -> SubstitutionMap {
+    SubstitutionMap(PassContext_getContextSubstitutionMap(passContext, type.bridged))
   }
 }
 
