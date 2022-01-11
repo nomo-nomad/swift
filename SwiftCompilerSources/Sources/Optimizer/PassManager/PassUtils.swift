@@ -37,6 +37,10 @@ struct PassContext {
     return CalleeAnalysis(bridged: bridgeCA)
   }
 
+  var rcIdentityAnalysis: RCIdentityAnalysis {
+    .init(bridged: PassContext_getRCIdentityAnalysis(passContext))
+  }
+
   enum EraseMode {
     case onlyInstruction, includingDebugUses
   }
@@ -86,8 +90,8 @@ struct PassContext {
     RefCountingInst_setIsAtomic(instruction.bridged, isAtomic)
   }
 
-  func getDeallocRef(for type: Type) -> Function? {
-    PassContext_getDeallocRef(passContext, type.bridged).function
+  func getDealloc(for type: Type) -> Function? {
+    PassContext_getDealloc(passContext, type.bridged).function
   }
 
   func getContextSubstitutionMap(for type: Type) -> SubstitutionMap {

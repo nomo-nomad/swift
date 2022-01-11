@@ -394,6 +394,10 @@ BridgedMemoryBehavior SILInstruction_getMemBehavior(BridgedInstruction inst) {
   return (BridgedMemoryBehavior)castToInst(inst)->getMemoryBehavior();
 }
 
+bool SILInstruction_mayReleaseOrReadRefCount(BridgedInstruction inst) {
+  return castToInst(inst)->mayReleaseOrReadRefCount();
+}
+
 BridgedInstruction MultiValueInstResult_getParent(BridgedMultiValueResult result) {
   return {static_cast<MultipleValueInstructionResult *>(result.obj)->getParent()};
 }
@@ -481,6 +485,11 @@ SwiftInt SwitchEnumInst_getCaseIndex(BridgedInstruction se, SwiftInt idx) {
 
 SwiftInt StoreInst_getStoreOwnership(BridgedInstruction store) {
   return (SwiftInt)castToInst<StoreInst>(store)->getOwnershipQualifier();
+}
+
+bool RefCountingInst_getIsAtomic(BridgedInstruction rc) {
+  return castToInst<RefCountingInst>(rc)->getAtomicity() ==
+         RefCountingInst::Atomicity::Atomic;
 }
 
 void RefCountingInst_setIsAtomic(BridgedInstruction rc, bool isAtomic) {

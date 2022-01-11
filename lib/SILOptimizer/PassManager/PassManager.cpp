@@ -1217,8 +1217,8 @@ PassContext_getRCIdentityAnalysis(BridgedPassContext context) {
   return {pm->getAnalysis<RCIdentityAnalysis>()};
 }
 
-OptionalBridgedFunction PassContext_getDeallocRef(BridgedPassContext context,
-                                                  BridgedType type) {
+OptionalBridgedFunction PassContext_getDealloc(BridgedPassContext context,
+                                               BridgedType type) {
   auto *cd = castToSILType(type).getClassOrBoundGenericClass();
   assert(cd && "no class type allocated with alloc_ref");
 

@@ -120,6 +120,7 @@ public func registerSILClasses() {
   register(DestructureStructInst.self)
   register(DestructureTupleInst.self)
   register(BeginApplyInst.self)
+  register(RefToBridgeObjectInst.self)
 
   register(UnreachableInst.self)
   register(ReturnInst.self)
